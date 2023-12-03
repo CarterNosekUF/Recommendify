@@ -34,32 +34,38 @@ class recommender:
         if self.target == 'failure':
             return []
         tracks_data = []
+        track_ids = [i['track']['id'] for i in self.target['tracks']['items']]
+        # Split track IDs into chunks of 100 or fewer
+        chunks = [track_ids[i:i + 100] for i in range(0, len(track_ids), 100)]
+        # Initialize an empty list to store all audio features
+        all_audio_features = []
+        # Iterate through each chunk and retrieve audio features
+        for chunk in chunks:
+            audio_features_chunk = self.sp.audio_features(chunk)
+            all_audio_features.extend(audio_features_chunk)
+        # Counter to track which track_id we are on
+        counter = 0
         for item in self.target['tracks']['items']:
             # Get track
             track = item['track']
-            if track is None:
-                continue
             # Get track ID
             track_id = track['id']
             # Get artist
             artist = self.sp.artist(track['artists'][0]['external_urls']['spotify'])
-            if artist is None:
-                continue
             # Get album
             album = self.sp.album(track["album"]["external_urls"]["spotify"])
-            if album is None:
-                continue
             # Get year
             year = album['release_date'][:4] # type: ignore
-            # Get genre of track
-            if len(artist['genres']) != 0: # type: ignore
-                genre = artist['genres'][0] # type: ignore
-            else:
-                genre = 'none'
-            #Get audio features
-            audio_features = self.sp.audio_features(track_id)[0] # type: ignore
-            if audio_features is None:
+            # Get genre of track, skips track if no genre present
+            if len(artist['genres']) == 0:
+                continue 
+            genre = artist['genres'][0] # type: ignore
+            #Get audio features, skips track if no audio features present
+            if len(all_audio_features[counter]) == 0:
+                counter += 1
                 continue
+            audio_features = all_audio_features[counter] # type: ignore
+            counter += 1
             # Get all relevant data about each track
             track_data = {
             'artist_name' : artist['name'], # type: ignore

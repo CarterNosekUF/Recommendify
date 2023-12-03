@@ -27,7 +27,7 @@ def select_columns(df):
 
 # Defines function that uses an awesome library that numerizes the subjectivity of a given piece of text
 def get_opinion(text):
-  blob = TextBlob(text).sentiment.subjectivity # type: ignore
+  return TextBlob(text).sentiment.subjectivity # type: ignore
 
 # Same function as above but gets the polarity instead of the subjectivity
 def get_polarization(text):
@@ -129,8 +129,8 @@ def generate_similarity_matrix(datasetFilePath: str, playlistArr) -> pd.DataFram
   # Trims down the unnecessary parts of the dataset
   dfDataset = select_columns(dfDataset)
 
-  # Drops any rows that have a track name of 'None' (yes, there was one song in the dataset called 'None' that threw everything off)
-  dfDataset = dfDataset.dropna(subset=['track_name'])
+  # Drops any rows that have any value of 'None' (yes, there was one song in the dataset called 'None' that threw everything off)
+  dfDataset = dfDataset.dropna(subset='track_name')
 
   # Gets features of the dataset
   datasetFeatures = get_total_features(dfDataset, audioCols)
