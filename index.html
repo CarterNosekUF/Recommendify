@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/style.css">
+  <title>Recommendify</title>
+</head>
+<body data-appstate="0">
+  <form id="playlist-form">
+    <input type="text"  class="input-space" name="playlist-url" placeholder = 'https://open.spotify.com/playlist/...'autofocus id="">
+	  <div id="formstuff">
+		  <h3>Sort Method:</h3>
+		  <select name="" id="sort-method">
+			  <option value="heap">Heap</option>
+			  <option value="merge">Merge</option>
+		  </select>
+		  <button type="submit">GO!</button>
+	  </div>
+		<div id="instructions">	
+			  <h2>Instructions:</h2>
+			  <p>Simply go to your Spotify Web Player and copy the link of a playlist (take the link from the website URL not the share button on the playlist). Then, choose a sorting algorithm.</p>
+		</div>
+  </form>
+  <div id="spinner-container">
+    <div id="spinner"></div>
+  </div>
+<div id="recommendations-container">
+  <h1>Recommendations:</h1>
+  <ul id="recommendations-list">
+    <li class="recommendation">
+      <img src="https://upload.wikimedia.org/wikipedia/en/1/10/Childish_Gambino_-_Awaken%2C_My_Love%21.png" alt="" class="recommendation-album">
+      <div class="recommendation-text">
+        <h3 class="recommendation-title">Awaken, My Love!</h3>
+        <h4 class="recommendation-artist">Childish Gambino</h4>
+      </div>
+		<div class="sim-score">
+			<svg class="sim-score" width=10 height=10>
+				<circle cx="50%" cy="50%" r="1em" stroke="var(--theme-sec)" fill="transparent" stroke-width=".3em"  />
+			</svg>
+		</div>
+    </li>
+    <li class="recommendation">
+      <img src="https://upload.wikimedia.org/wikipedia/en/1/10/Childish_Gambino_-_Awaken%2C_My_Love%21.png" alt="" class="recommendation-album">
+      <div class="recommendation-text">
+        <h3 class="recommendation-title">Awaken, My Love!</h3>
+        <h4 class="recommendation-artist">Childish Gambino</h4>
+      </div>
+		<div class="sim-score">
+			<svg class="sim-score" width=10 height=10>
+				<circle cx="50%" cy="50%" r="1em" stroke="var(--theme-sec)" fill="transparent" stroke-width=".3em"  />
+			</svg>
+		</div>
+    </li>
+    <li class="recommendation">
+      <img src="https://upload.wikimedia.org/wikipedia/en/1/10/Childish_Gambino_-_Awaken%2C_My_Love%21.png" alt="" class="recommendation-album">
+      <div class="recommendation-text">
+        <h3 class="recommendation-title">Awaken, My Love!</h3>
+        <h4 class="recommendation-artist">Childish Gambino</h4>
+      </div>
+		<div class="sim-score">
+			<svg class="sim-score" width=10 height=10>
+				<circle cx="50%" cy="50%" r="1em" stroke="var(--theme-sec)" fill="transparent" stroke-width=".3em"  />
+			</svg>
+		</div>
+    </li>
+    <li class="recommendation">
+      <img src="https://upload.wikimedia.org/wikipedia/en/1/10/Childish_Gambino_-_Awaken%2C_My_Love%21.png" alt="" class="recommendation-album">
+      <div class="recommendation-text">
+        <h3 class="recommendation-title">Awaken, My Love!</h3>
+        <h4 class="recommendation-artist">Childish Gambino</h4>
+      </div>
+		<div class="sim-score">
+			<svg class="sim-score" width=10 height=10>
+				<circle cx="50%" cy="50%" r="1em" stroke="var(--theme-sec)" fill="transparent" stroke-width=".3em"  />
+			</svg>
+		</div>
+    <li class="recommendation">
+      <img src="https://upload.wikimedia.org/wikipedia/en/1/10/Childish_Gambino_-_Awaken%2C_My_Love%21.png" alt="" class="recommendation-album">
+      <div class="recommendation-text">
+        <h3 class="recommendation-title">Awaken, My Love!</h3>
+        <h4 class="recommendation-artist">Childish Gambino</h4>
+      </div>
+		<div class="sim-score">
+			<svg class="sim-score" width=10 height=10>
+				<circle cx="50%" cy="50%" r="1em" stroke="var(--theme-sec)" fill="transparent" stroke-width=".3em"  />
+			</svg>
+		</div>
+    </li>
+  </ul>
+</div>
+  <script src="/static/script.js"></script>
+</body>
+</html>

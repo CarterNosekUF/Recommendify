@@ -1,16 +1,25 @@
 import heapq
-def custom_comparator(a, b):
-    # Define your custom comparison logic here
-    # For example, sorting in descending order:
-    return a > b
-#xx
-def merge(dataSet, l, m, r, comparator):
+import pandas as pd
+
+# Defines comparator for sorting algorithms
+def comparator(a, b):
+    similarity_a = a['similarity']
+    similarity_b = b['similarity']
+    
+    # Compares similarity scores
+    return similarity_a > similarity_b
+
+# Defines the merge aspect of the mergeSort algorithm
+def merge(dataSet, l, m, r):
+    # Defines size of each half
     n1 = m - l + 1
     n2 = r - m
 
+    # Initializes left and right lists
     L = [0] * n1
     R = [0] * n2
 
+    # Fills each half of the lists
     for i in range(n1):
         L[i] = dataSet[l + i]
 
@@ -20,6 +29,7 @@ def merge(dataSet, l, m, r, comparator):
     i = j = 0
     k = l
 
+    # Merges lists using custom comparator
     while i < n1 and j < n2:
         if comparator(L[i], R[j]):
             dataSet[k] = L[i]
@@ -28,7 +38,7 @@ def merge(dataSet, l, m, r, comparator):
             dataSet[k] = R[j]
             j += 1
         k += 1
-
+    # Appends any left over elements
     while i < n1:
         dataSet[k] = L[i]
         i += 1
@@ -39,26 +49,22 @@ def merge(dataSet, l, m, r, comparator):
         j += 1
         k += 1
 
-def mergeSort(dataSet, l, r, comparator):
+# Defines mergeSortHelper so mergeSort does not have more than 1 parameter
+def mergeSortHelper(dataSet, l, r):
     if l < r:
         m = l + (r - l) // 2
-        mergeSort(dataSet, l, m, comparator)
-        mergeSort(dataSet, m + 1, r, comparator)
-        merge(dataSet, l, m, r, comparator)
+        # Recursively calls mergeSort on each half
+        mergeSortHelper(dataSet, l, m)
+        mergeSortHelper(dataSet, m + 1, r)
+        merge(dataSet, l, m, r)
 
+# Defines mergeSort that simply calls the mergeSortHelper
+def mergeSort(dataSet):
+    mergeSortHelper(dataSet, 0, len(dataSet) - 1)
 
-def heapSort(dataSet, comparator):
-    if comparator == custom_comparator:
-        # For descending order sorting, invert the values
-        dataSet = [-x for x in dataSet]
-
-    heapq.heapify(dataSet)
-
-    sortedData = []
-    while dataSet:
-        if comparator == custom_comparator:
-            sortedData.append(-heapq.heappop(dataSet))
-        else:
-            sortedData.append(heapq.heappop(dataSet))
-
+# Defines the heapSort algorithm
+def heapSort(dataSet):
+    # Gets the n-largest elements from the dataset using the heapq library with lambda function that will use similarity as comparison
+    sortedData = list(heapq.nlargest(len(dataSet), dataSet, 
+                                     key=lambda x: (x['similarity'], x['track_id'])))
     return sortedData
